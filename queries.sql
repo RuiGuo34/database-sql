@@ -5,9 +5,9 @@
 
 --A
 /*
-create table sailor (sname CHAR(40), rating INT, PRIMARY KEY (sname));
-create table boat (bname CHAR(40), color CHAR(40), rating INT, PRIMARY KEY (bname));
-create table reservation (sname CHAR(40) NOT NULL, bname CHAR(40) NOT NULL, day CHAR(40), FOREIGN KEY (bname) REFERENCES boat(bname),FOREIGN KEY (sname) REFERENCES sailor(sname));
+create table sailor (sname CHAR(50), rating INT, PRIMARY KEY (sname));
+create table boat (bname CHAR(50), color CHAR(50), rating INT, PRIMARY KEY (bname));
+create table reservation (sname CHAR(50) NOT NULL, bname CHAR(50) NOT NULL, day CHAR(50), FOREIGN KEY (bname) REFERENCES boat(bname),FOREIGN KEY (sname) REFERENCES sailor(sname));
 */
 
 --B1
@@ -54,4 +54,4 @@ update reservation set day = 'x' where day = 'Monday';
 update reservation set day = 'Monday' where day = 'Wednesday';
 update reservation set day = 'Wednesday' where day = 'x';
 --(2)
-delete from reservation where reservation.day in (SELECT r.day FROM sailor s, boat b, reservation r WHERE r.bname = b.bname AND r.sname = s.sname AND s.rating < b.rating);
+delete from reservation where (reservation.sname, reservation.bname) in (SELECT r.sname, r.bname FROM sailor s, boat b, reservation r WHERE r.bname = b.bname AND r.sname = s.sname AND s.rating < b.rating);
